@@ -20,10 +20,12 @@ def cli(mu: float, sigma: float, fps: int, duration: float):
     """
     delay = 1. / fps
     exit_time  = time.monotonic() + duration
+    base = f'{mu:.2f} \u00B1 {2*sigma:.2f}'
 
     while (now := time.monotonic()) < exit_time:
-        click.echo(f'{gauss(mu, sigma): .2f}\r', nl=False)
+        click.echo(f'{base} ({gauss(mu, sigma): .2f})\r', nl=False)
         time.sleep(max(0, (now + delay) - time.monotonic()))
+    click.echo()
         
 
 if __name__ == '__main__':
