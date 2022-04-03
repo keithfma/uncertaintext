@@ -2,13 +2,13 @@
 // TODO: define usage here
 //
 // dependencies: 
-// * https://github.com/d3/d3-format (FIXME: will want a hard-copy of this, assuming the license is OK)
+// * https://github.com/d3/d3-format 
+// * https://atomiks.github.io/tippyjs/v6/
 
 // TODO: make a separate file for just the utilities, and then document how to invoke them in a user's 
 //   own JS.
-
-
-// FIXME: how to import the dependency here instead of in the HTML header?
+// TODO: how to import the dependency here instead of in the HTML header?
+// TODO: include hard-copies of dependencies here so that it works in perpetuity (license permitting)?
 
 
 // Standard normal variate using Box-Muller transform.
@@ -47,6 +47,9 @@ function update_sample(target, mode, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
     } else if (mode == 'sample-only') {
         target.innerHTML = fmt_sample(sample);
 
+    } else if (mode == 'sample-on-hover') {
+        target.setContent(fmt_sample(sample));
+
     } else {
         console.log('Display mode "%s" not yet implemented, sorry!', mode);
     }
@@ -73,6 +76,9 @@ function init_uncertaintext() {
         let fmt_mu     = optional_data(target, 'fmtMu', " .2f");
         let fmt_sigma  = optional_data(target, 'fmtSigma', " .2f");
         let fmt_sample = optional_data(target, 'fmtSample', fmt_sigma);
+        fmt_mu     = d3.format(fmt_mu);
+        fmt_sigma  = d3.format(fmt_sigma);
+        fmt_sample = d3.format(fmt_sample);
 
         // update interval (optional) 
         let fps = optional_data(target, 'fps', 5);
@@ -85,6 +91,14 @@ function init_uncertaintext() {
             display_mode = 'full';
         }
 
+        // start with something readable
+        target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)}`
+
+        if (display_mode === 'sample-on-hover') {
+            // create "tippy" tooltip instance, and make it the new target
+            target = tippy(target);
+        }
+
         // start updating 
         setInterval(
             update_sample,
@@ -93,9 +107,9 @@ function init_uncertaintext() {
             display_mode,
             mu,
             sigma,
-            d3.format(fmt_mu),
-            d3.format(fmt_sigma),
-            d3.format(fmt_sample)
+            fmt_mu,
+            fmt_sigma,
+            fmt_sample
         );        
     } 
 
