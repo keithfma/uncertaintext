@@ -3,7 +3,9 @@
 <head>
   <title>Uncertaintext prototype example</title>
   <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/d3-format@3"></script>
   <script src=uncertaintext.js defer></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -26,10 +28,10 @@
   read the ruler in the picture any closer than within about 0.2 cm (see previous
   example). The stack goes starts at about the 16.5 cm mark and ends at about the
   54.5 cm mark, so the stack is about 
-  <span class=uncertaintext>38.0 cm ± 0.2 cm<span>
+  <span class=uncertaintext data-mu=38 data-fmtmu="2.0f" data-sigma=0.2 data-fmtsigma=".2f" data-fmtsample="2.2f"></span> cm
   long. Divide the length of the stack by the number of CD cases in the stack
   (36) to get the thickness of a single case:
-  <span class=uncertaintext>1.056 cm ± 0.006 cm</span>.
+  <span class=uncertaintext data-mu=1.056 data-fmtmu="1.3f" data-sigma=0.006 data-fmtsigma='.3f' data-fmtsample="1.3f" data-fps=1></span> cm.
   By "spreading out" the uncertainty over the entire stack of cases, you can get
   a measurement that is more precise than what can be determined by measuring
   just one of the cases with the same ruler. We are assuming that all the cases
