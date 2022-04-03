@@ -38,9 +38,18 @@ function optional_data(element, name, fallback) {
 
 
 // update element with formatted sample from the distribution
-function update_sample(target, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
+function update_sample(target, mode, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
     var sample = randn_bm()*sigma + mu;
-    target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)} (${fmt_sample(sample)})`
+    
+    if (mode == 'full') {
+        target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)} (${fmt_sample(sample)})`
+
+    } else if (mode == 'sample-only') {
+        target.innerHTML = fmt_sample(sample);
+
+    } else {
+        console.log('Display mode "%s" not yet implemented, sorry!', mode);
+    }
 }
 
 // initialize all uncertaintext elements on the page
@@ -57,6 +66,9 @@ function init_uncertaintext() {
         let mu    = parseFloat(required_data(target, 'mu'));
         let sigma = parseFloat(required_data(target, 'sigma'));
 
+        // display mode (optional)
+        let display_mode = optional_data(target, 'displayMode', 'full')
+
         // format specifications (optional) 
         let fmt_mu     = optional_data(target, 'fmtMu', " .2f");
         let fmt_sigma  = optional_data(target, 'fmtSigma', " .2f");
@@ -66,11 +78,19 @@ function init_uncertaintext() {
         let fps = optional_data(target, 'fps', 5);
         let delay_ms = 1. / fps * 1000.
 
+        // validate parameters
+        valid_display_modes = ['full', 'sample-only', 'sample-on-hover']
+        if (valid_display_modes.includes(display_mode) === false) {
+            console.log('Invalid display mode: "%s", falling back to "full"', display_mode);
+            display_mode = 'full';
+        }
+
         // start updating 
         setInterval(
             update_sample,
             delay_ms,
             target,
+            display_mode,
             mu,
             sigma,
             d3.format(fmt_mu),
