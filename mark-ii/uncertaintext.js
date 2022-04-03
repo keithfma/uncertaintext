@@ -1,5 +1,15 @@
-// See: https://github.com/d3/d3-format
-// FIXME: will want a hard-copy of this, assuming the license is OK
+// Uncertaintext Mark II
+// TODO: define usage here
+//
+// dependencies: 
+// * https://github.com/d3/d3-format (FIXME: will want a hard-copy of this, assuming the license is OK)
+
+// TODO: make a separate file for just the utilities, and then document how to invoke them in a user's 
+//   own JS.
+
+
+// FIXME: how to import the dependency here instead of in the HTML header?
+
 
 // Standard normal variate using Box-Muller transform.
 // see: https://stackoverflow.com/a/36481059
@@ -11,10 +21,12 @@ function randn_bm() {
    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 }
 
+
 // retrieve dataset attribute or fail if not set
 function required_data(element, name) {
     return element.dataset[name]
 }
+
 
 // retrieve dataset attribute or default if not set
 function optional_data(element, name, fallback) {
@@ -26,17 +38,15 @@ function optional_data(element, name, fallback) {
 
 
 // update element with formatted sample from the distribution
-function uncertaintext(target, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
+function update_sample(target, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
     var sample = randn_bm()*sigma + mu;
     target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)} (${fmt_sample(sample)})`
 }
 
-
-document.addEventListener("DOMContentLoaded", function() {
-
+// initialize all uncertaintext elements on the page
+function init_uncertaintext() {
     console.log('Uncertaintext Mark II Activated')
 
-    
     targets = document.getElementsByClassName("uncertaintext")
 
     for (let i = 0; i < targets.length; i++) {
@@ -58,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // start updating 
         setInterval(
-            uncertaintext,
+            update_sample,
             delay_ms,
             target,
             mu,
@@ -68,4 +78,8 @@ document.addEventListener("DOMContentLoaded", function() {
             d3.format(fmt_sample)
         );        
     } 
-});
+
+}
+
+// TODO: document that this is all a user will need to add
+document.addEventListener("DOMContentLoaded", init_uncertaintext());
