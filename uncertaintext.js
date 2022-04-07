@@ -14,14 +14,7 @@
 //  * data-fmt-sigma=[string]: optional, TODO
 //  * data-fmt-sample=[string]: optional, TODO
 //
-// dependencies: 
-// * https://github.com/d3/d3-format 
-// * https://atomiks.github.io/tippyjs/v6/
-// TODO: how are dependencies usually handled?
-
-
-// TODO: consider a local copy, license permitting
-import {format} from "https://cdn.skypack.dev/d3-format@3";
+// dependencies: TODO
 
 
 // Standard normal variate using Box-Muller transform.
@@ -51,18 +44,17 @@ function optional_data(element, name, fallback) {
 
 
 // update element with formatted sample from the distribution
-function update_sample(target, mode, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
+function update_sample(target, tooltip, mode, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
     var sample = randn_bm()*sigma + mu;
     
     if (mode == 'full') {
         target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)} (${fmt_sample(sample)})`
 
     } else if (mode == 'sample-only') {
-        // TODO: populate the tooltip with mu +- sigma
         target.innerHTML = fmt_sample(sample);
 
     } else if (mode == 'sample-on-hover') {
-        target.setContent(fmt_sample(sample));
+        tooltip.setContent(fmt_sample(sample));
 
     } else {
         console.log('Display mode "%s" not yet implemented, sorry!', mode);
@@ -70,7 +62,7 @@ function update_sample(target, mode, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
 }
 
 // initialize all uncertaintext elements on the page
-export function init() {
+function uncertaintext() {
 
     let targets = document.getElementsByClassName("uncertaintext")
 
@@ -89,9 +81,9 @@ export function init() {
         let fmt_mu     = optional_data(target, 'fmtMu', " .2f");
         let fmt_sigma  = optional_data(target, 'fmtSigma', " .2f");
         let fmt_sample = optional_data(target, 'fmtSample', fmt_sigma);
-        fmt_mu     = format(fmt_mu);
-        fmt_sigma  = format(fmt_sigma);
-        fmt_sample = format(fmt_sample);
+        fmt_mu     = d3.format(fmt_mu);
+        fmt_sigma  = d3.format(fmt_sigma);
+        fmt_sample = d3.format(fmt_sample);
 
         // update interval (optional) 
         let fps = optional_data(target, 'fps', 5);
@@ -104,12 +96,18 @@ export function init() {
             display_mode = 'full';
         }
 
-        // start with something readable
-        target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)}`
+        // initialize text and tooltip
+        if (display_mode === 'full') {
+            target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)} (${fmt_sample(mu)}`;
+            tooltip = null;
 
-        if (display_mode === 'sample-on-hover') {
-            // create "tippy" tooltip instance, and make it the new target
-            target = tippy(target);
+        } else if (display_mode === 'sample-only') {
+            target.innerHTML = fmt_sample(mu);
+            tooltip = tippy(target, {content: `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)}`});
+            
+        } if (display_mode === 'sample-on-hover') {
+            target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)}`;
+            tooltip = tippy(target, {content: fmt_sample(mu)});
         }
 
         // start updating 
@@ -117,6 +115,7 @@ export function init() {
             update_sample,
             delay_ms,
             target,
+            tooltip,
             display_mode,
             mu,
             sigma,
