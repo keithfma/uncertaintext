@@ -7,25 +7,18 @@
 //
 // To use, define your distributions as <span> elements with the following attributes:
 //  * class=uncertaintext: required, marks the span element for uncertaintext to find and update
-//  * data-mu=[float]: required, TODO
-//  * data-sigma=[float]: required, TODO 
-//  * data-display-mode: optional, TODO
-//  * data-fmt-mu=[string]: optional, TODO
-//  * data-fmt-sigma=[string]: optional, TODO
-//  * data-fmt-sample=[string]: optional, TODO
+//  * data-uct-distrib=[string], required, name of the distribution to sample from, currently supported
+//      names are: normal.
+//  * data-uct-mu=[float]: required for normal distribution, mean
+//  * data-uct-sigma=[float]: required for normal distribution, standard deviation
+//  * data-uct-format=[string]: optional, printf-style format string to apply to the sample,
+//      see https://github.com/d3/d3-format
+//  * data-uct-fps=[int]: optional, update frequency in "frames" per second
 //
-// dependencies: TODO
-
-
-// Standard normal variate using Box-Muller transform.
-// see: https://stackoverflow.com/a/36481059
-function randn_bm() {
-   var u = 0;
-   var v = 0;
-   while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
-   while (v === 0) v = Math.random();
-   return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-}
+// dependencies:
+//  * d3-format: https://github.com/d3/d3-format
+//  * d3-random: https://github.com/d3/d3-random
+////
 
 
 // retrieve dataset attribute or fail if not set
@@ -44,22 +37,10 @@ function optional_data(element, name, fallback) {
 
 
 // update element with formatted sample from the distribution
-function update_sample(target, tooltip, mode, mu, sigma, fmt_mu, fmt_sigma, fmt_sample) {
-    var sample = randn_bm()*sigma + mu;
-    
-    if (mode == 'full') {
-        target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)} (${fmt_sample(sample)})`
-
-    } else if (mode == 'sample-only') {
-        target.innerHTML = fmt_sample(sample);
-
-    } else if (mode == 'sample-on-hover') {
-        tooltip.setContent(fmt_sample(sample));
-
-    } else {
-        console.log('Display mode "%s" not yet implemented, sorry!', mode);
-    }
+function update_sample(target, sampler, sample_format) {
+    target.innerHTML = sample_format(sampler());
 }
+
 
 // initialize all uncertaintext elements on the page
 function uncertaintext() {
@@ -69,60 +50,36 @@ function uncertaintext() {
     for (let i = 0; i < targets.length; i++) {
 
         let target = targets[i];
+        let sampler = null; 
 
         // distribution definition (required)
-        let mu    = parseFloat(required_data(target, 'mu'));
-        let sigma = parseFloat(required_data(target, 'sigma'));
-
-        // display mode (optional)
-        let display_mode = optional_data(target, 'displayMode', 'full')
+        let distribution_name = required_data(target, 'uctDistrib');
+        
+        // init sampling function
+        if (distribution_name === 'normal') {
+            // TODO: error handling if there is a missing attribute?
+            // TODO: sniff for unused attributes?
+            let mu    = parseFloat(required_data(target, 'uctMu'));
+            let sigma = parseFloat(required_data(target, 'uctSigma'));
+            sampler = d3.randomNormal(mu, sigma);
+        
+        // TODO: add another distribution or two
+        
+        } else {
+            // TODO: I bet we can do better error handling than this
+            console.log('No support for distribution: "%s"', distribution_name);
+        }
 
         // format specifications (optional) 
-        let fmt_mu     = optional_data(target, 'fmtMu', " .2f");
-        let fmt_sigma  = optional_data(target, 'fmtSigma', " .2f");
-        let fmt_sample = optional_data(target, 'fmtSample', fmt_sigma);
-        fmt_mu     = d3.format(fmt_mu);
-        fmt_sigma  = d3.format(fmt_sigma);
-        fmt_sample = d3.format(fmt_sample);
+        // TODO: a smarter default format would be nice
+        let sample_format = d3.format(optional_data(target, 'uctFormat', ' .2f'));
 
         // update interval (optional) 
-        let fps = optional_data(target, 'fps', 5);
+        let fps = optional_data(target, 'uctFps', 5);
         let delay_ms = 1. / fps * 1000.
 
-        // validate parameters
-        let valid_display_modes = ['full', 'sample-only', 'sample-on-hover']
-        if (valid_display_modes.includes(display_mode) === false) {
-            console.log('Invalid display mode: "%s", falling back to "full"', display_mode);
-            display_mode = 'full';
-        }
-
-        // initialize text and tooltip
-        if (display_mode === 'full') {
-            target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)} (${fmt_sample(mu)}`;
-            tooltip = null;
-
-        } else if (display_mode === 'sample-only') {
-            target.innerHTML = fmt_sample(mu);
-            tooltip = tippy(target, {content: `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)}`});
-            
-        } if (display_mode === 'sample-on-hover') {
-            target.innerHTML = `${fmt_mu(mu)} &plusmn; ${fmt_sigma(sigma)}`;
-            tooltip = tippy(target, {content: fmt_sample(mu)});
-        }
-
         // start updating 
-        setInterval(
-            update_sample,
-            delay_ms,
-            target,
-            tooltip,
-            display_mode,
-            mu,
-            sigma,
-            fmt_mu,
-            fmt_sigma,
-            fmt_sample
-        );        
+        setInterval(update_sample, delay_ms, target, sampler, sample_format);        
     } 
 
 }
