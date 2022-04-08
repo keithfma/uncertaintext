@@ -50,36 +50,47 @@ function uncertaintext() {
     for (let i = 0; i < targets.length; i++) {
 
         let target = targets[i];
-        let sampler = null; 
 
-        // distribution definition (required)
-        let distribution_name = required_data(target, 'uctDistrib');
-        
-        // init sampling function
-        if (distribution_name === 'normal') {
-            // TODO: error handling if there is a missing attribute?
-            // TODO: sniff for unused attributes?
-            let mu    = parseFloat(required_data(target, 'uctMu'));
-            let sigma = parseFloat(required_data(target, 'uctSigma'));
-            sampler = d3.randomNormal(mu, sigma);
-        
-        // TODO: add another distribution or two
-        
-        } else {
-            // TODO: I bet we can do better error handling than this
-            console.log('No support for distribution: "%s"', distribution_name);
-        }
+        try {
 
-        // format specifications (optional) 
-        // TODO: a smarter default format would be nice
-        let sample_format = d3.format(optional_data(target, 'uctFormat', ' .2f'));
+            let sampler = null; 
 
-        // update interval (optional) 
-        let fps = optional_data(target, 'uctFps', 5);
-        let delay_ms = 1. / fps * 1000.
+            // distribution definition (required)
+            let distribution_name = required_data(target, 'uctDistrib');
+            
+            // sampling function (required)
+            if (distribution_name === 'normal') {
+                let mu    = parseFloat(required_data(target, 'uctMu'));
+                let sigma = parseFloat(required_data(target, 'uctSigma'));
+                sampler = d3.randomNormal(mu, sigma);
+            
+            // TODO: add another distribution or two
+            
+            } else {
+                console.log('No support for distribution: "%s"', distribution_name);
+            }
 
-        // start updating 
-        setInterval(update_sample, delay_ms, target, sampler, sample_format);        
+            // format specifications (optional) 
+            let sample_format = d3.format(optional_data(target, 'uctFormat', ' .2f'));
+
+            // update interval (optional) 
+            let fps = optional_data(target, 'uctFps', 5);
+            let delay_ms = 1. / fps * 1000.
+
+            // define update function
+            let updater = function() {
+                target.innerHTML = sample_format(sampler());
+            };
+
+            // call once (to setup page an trigger errors where we catch them), then set to repeat
+            updater();
+            setInterval(updater, delay_ms);        
+
+        } catch(err) {
+            // indicate error, and continue on to the next element 
+            console.log(err);
+            target.innerHTML = '[error]';
+        }    
     } 
 
 }
