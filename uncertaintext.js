@@ -5,7 +5,8 @@
 // usual summary statistics. The aim is to give readers a "gut feel" for the uncertainty, and have
 // a little fun doing it.
 //
-// To use, define your distributions as <span> elements with the following attributes:
+// To use, include this script in your webpage as a module, and then define
+// your distributions as <span> elements with the following attributes:
 //  * class=uncertaintext: required, marks the span element for uncertaintext to find and update
 //  * data-uct-distrib=[string], required, name of the distribution to sample from, currently supported
 //      names are: normal.
@@ -97,3 +98,5 @@ export function uncertaintext() {
     } 
 
 }
+
+document.addEventListener("DOMContentLoaded", uncertaintext());
