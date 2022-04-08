@@ -20,6 +20,9 @@
 //  * d3-random: https://github.com/d3/d3-random
 ////
 
+import {randomNormal} from "https://cdn.skypack.dev/d3-random@3";
+import {format} from "https://cdn.skypack.dev/d3-format@3";
+
 
 // retrieve dataset attribute or fail if not set
 function required_data(element, name) {
@@ -43,7 +46,7 @@ function update_sample(target, sampler, sample_format) {
 
 
 // initialize all uncertaintext elements on the page
-function uncertaintext() {
+export function uncertaintext() {
 
     let targets = document.getElementsByClassName("uncertaintext")
 
@@ -62,7 +65,7 @@ function uncertaintext() {
             if (distribution_name === 'normal') {
                 let mu    = parseFloat(required_data(target, 'uctMu'));
                 let sigma = parseFloat(required_data(target, 'uctSigma'));
-                sampler = d3.randomNormal(mu, sigma);
+                sampler = randomNormal(mu, sigma);
             
             // TODO: add another distribution or two
             
@@ -71,7 +74,7 @@ function uncertaintext() {
             }
 
             // format specifications (optional) 
-            let sample_format = d3.format(optional_data(target, 'uctFormat', ' .2f'));
+            let sample_format = format(optional_data(target, 'uctFormat', ' .2f'));
 
             // update interval (optional) 
             let fps = optional_data(target, 'uctFps', 5);
