@@ -21,14 +21,14 @@
 //  * d3-random: https://github.com/d3/d3-random
 ////
 
-import {randomNormal} from "https://cdn.skypack.dev/d3-random@3";
-import {format} from "https://cdn.skypack.dev/d3-format@3";
+import {randomNormal} from "d3-random";
+import {format} from "d3-format";
 
 
 // retrieve dataset attribute or fail if not set
 function required_data(element, name) {
     return element.dataset[name]
-}
+};
 
 
 // retrieve dataset attribute or default if not set
@@ -37,17 +37,17 @@ function optional_data(element, name, fallback) {
         return element.dataset[name]
     }
     return fallback
-}
+};
 
 
 // update element with formatted sample from the distribution
 function update_sample(target, sampler, sample_format) {
     target.innerHTML = sample_format(sampler());
-}
+};
 
 
 // initialize all uncertaintext elements on the page
-export function uncertaintext() {
+export default function uncertaintext() {
 
     let targets = document.getElementsByClassName("uncertaintext")
 
@@ -72,6 +72,7 @@ export function uncertaintext() {
             
             } else {
                 console.log('No support for distribution: "%s"', distribution_name);
+                // TODO: raise an error to be caught below
             }
 
             // format specifications (optional) 
@@ -97,6 +98,4 @@ export function uncertaintext() {
         }    
     } 
 
-}
-
-document.addEventListener("DOMContentLoaded", uncertaintext());
+};

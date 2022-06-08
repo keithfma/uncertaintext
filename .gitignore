@@ -1,3 +1,5 @@
 .venv/*
 NEXT
 .*.swp
+node_modules/*
+dist/*
