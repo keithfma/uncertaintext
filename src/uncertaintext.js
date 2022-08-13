@@ -25,12 +25,14 @@ import {randomNormal} from "d3-random";
 import {format} from "d3-format";
 
 
+// TODO: rename to get_required
 // retrieve dataset attribute or fail if not set
 function required_data(element, name) {
     return element.dataset[name]
 };
 
 
+// TODO: rename to get_optional
 // retrieve dataset attribute or default if not set
 function optional_data(element, name, fallback) {
     if (name in element.dataset) {
@@ -40,6 +42,7 @@ function optional_data(element, name, fallback) {
 };
 
 
+// TODO: this function is not used, kill it
 // update element with formatted sample from the distribution
 function update_sample(target, sampler, sample_format) {
     target.innerHTML = sample_format(sampler());
@@ -59,6 +62,7 @@ export default function uncertaintext() {
 
             let sampler = null; 
 
+            // TODO: factor out a testable function for creating the sampler object
             // distribution definition (required)
             let distribution_name = required_data(target, 'uctDistrib');
             
@@ -68,20 +72,23 @@ export default function uncertaintext() {
                 let sigma = parseFloat(required_data(target, 'uctSigma'));
                 sampler = randomNormal(mu, sigma);
             
-            // TODO: add another distribution or two
+            // TODO: add uniform distribution
             
             } else {
                 console.log('No support for distribution: "%s"', distribution_name);
                 // TODO: raise an error to be caught below
             }
 
+            // TODO: factor out a testable function for creating the format spec
             // format specifications (optional) 
             let sample_format = format(optional_data(target, 'uctFormat', ' .2f'));
 
+            // TODO: factor out a testable function for update interval 
             // update interval (optional) 
             let fps = optional_data(target, 'uctFps', 5);
             let delay_ms = 1. / fps * 1000.
 
+            // TODO: factor out a (testable) higher-level function that returns this update function
             // define update function
             let updater = function() {
                 target.innerHTML = sample_format(sampler());
