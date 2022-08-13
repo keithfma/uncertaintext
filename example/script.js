@@ -1,4 +1,4 @@
-import uncertaintext from './dist/uncertaintext.js'
+import uncertaintext from 'uncertaintext.js'
 
 window.onload = function () {
   uncertaintext();

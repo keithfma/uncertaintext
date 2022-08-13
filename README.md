@@ -8,3 +8,8 @@ The MVP is just a single JS file, `uncertaintext.js`, which applies dynamic form
 to specially-tagged HTML elements when included in a webpage. This repo also
 includes a simple example website to show off the basic functionality.
 
+## Developer Notes
+
+Modules can't be served from the filesystem, so to view the example page, run:
+`python3 -m http.server example.html`
+
