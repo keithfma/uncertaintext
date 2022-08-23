@@ -26,22 +26,31 @@ import {format} from "d3-format";
 
 
 /**
-* Retrieve dataset attribute or die trying 
+** Retrieve dataset attribute or die trying 
+*
 * @param element: DOM element the data is attached to
 * @param name: the dataset attribute name, in the mangled form it is made available to js scripts (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+*
+* @return: the value of the dataset attribute
 */
-export function get_required(element, name) {
-    let value = element.dataset[name]
-    if (value === undefined) {
-        throw 'No dataset attribute: ' + name
+export function get_required_data(element, name) {
+    if (name in element.dataset) {
+        return element.dataset[name]
     }
-    return value;
+    throw 'No dataset attribute: ' + name
 };
 
 
-// TODO: rename to get_optional
-// retrieve dataset attribute or default if not set
-function optional_data(element, name, fallback) {
+/**
+* Retrieve dataset attribute or default value if it is not set
+*
+* @param element: DOM element the data is attached to
+* @param name: the dataset attribute name, in the mangled form it is made available to js scripts (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+* @param fallback: default value to return if the attribute is not set
+*
+* @return: the value of the dataset attribute or default
+*/
+export function get_optional_data(element, name, fallback) {
     if (name in element.dataset) {
         return element.dataset[name]
     }
@@ -71,12 +80,12 @@ export default function uncertaintext() {
 
             // TODO: factor out a testable function for creating the sampler object
             // distribution definition (required)
-            let distribution_name = get_required(target, 'uctDistrib');
+            let distribution_name = get_required_data(target, 'uctDistrib');
             
             // sampling function (required)
             if (distribution_name === 'normal') {
-                let mu    = parseFloat(get_required(target, 'uctMu'));
-                let sigma = parseFloat(get_required(target, 'uctSigma'));
+                let mu    = parseFloat(get_required_data(target, 'uctMu'));
+                let sigma = parseFloat(get_required_data(target, 'uctSigma'));
                 sampler = randomNormal(mu, sigma);
             
             // TODO: add uniform distribution
@@ -88,11 +97,11 @@ export default function uncertaintext() {
 
             // TODO: factor out a testable function for creating the format spec
             // format specifications (optional) 
-            let sample_format = format(optional_data(target, 'uctFormat', ' .2f'));
+            let sample_format = format(get_optional_data(target, 'uctFormat', ' .2f'));
 
             // TODO: factor out a testable function for update interval 
             // update interval (optional) 
-            let fps = optional_data(target, 'uctFps', 5);
+            let fps = get_optional_data(target, 'uctFps', 5);
             let delay_ms = 1. / fps * 1000.
 
             // TODO: factor out a (testable) higher-level function that returns this update function
