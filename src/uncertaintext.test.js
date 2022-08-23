@@ -48,7 +48,12 @@ test('get_sampler normal distribution happy path', () => {
   let element = document.getElementById('test-element');
 
   let sampler = get_sampler(element);
-  console.log(sampler())
+  let sample = sampler.sample();
+
+  expect(sampler.name).toBe('normal');
+  expect(sampler.parameters.mu).toBe(1);
+  expect(sampler.parameters.sigma).toBe(2);
+  expect(typeof sample).toBe('number');
 });
 
 

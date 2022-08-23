@@ -65,28 +65,38 @@ export function get_optional_data(element, name, fallback) {
 * @param element: DOM element with uncertaintext dataset attributes that define the
 *   sampler distribution and any distribution-specific parameters
 *
-* @returns: a d3-random sampler object, which returns a random sample from the specified  
-*   distribution when called
+* @returns: an object with the following properties:
+*   - name: distribution name
+*   - parameters: nested object containing any parameters used to define the distribution
+*   - sample: anonymous function that returns a random sample from the specified  
+*     distribution when called
 */
 export function get_sampler(element) {
 
+    let name = get_required_data(element, 'uctDistrib');
     let sampler = null; 
+    let parameters = null;
 
-    let distribution_name = get_required_data(element, 'uctDistrib');
-
-    if (distribution_name === 'normal') {
+    if (name === 'normal') {
         // normal (Gaussian) distribution
-        let mu    = parseFloat(get_required_data(element, 'uctMu'));
-        let sigma = parseFloat(get_required_data(element, 'uctSigma'));
-        sampler = randomNormal(mu, sigma);
+        parameters = {
+            mu: parseFloat(get_required_data(element, 'uctMu')),
+            sigma: parseFloat(get_required_data(element, 'uctSigma')),
+        };
+        sampler = randomNormal(parameters.mu, parameters.sigma);
+
             
     } else {
         // unsupported distribution
-        throw 'No support for distribution:  ' + distribution_name;
+        throw 'No support for distribution:  ' + name;
 
     }
 
-    return sampler
+    return {
+        name: name,
+        parameters: parameters,
+        sample: sampler,
+    };
 }
 
 
