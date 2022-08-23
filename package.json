@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "test": "node --input-type=module --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "build": "webpack"
+    "build": "webpack --mode=production",
+    "build-dev": "webpack --mode=development --devtool=cheap-module-source-map"
   },
   "repository": {
     "type": "git",

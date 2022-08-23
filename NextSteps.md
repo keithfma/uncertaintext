@@ -27,13 +27,18 @@ What do we want to test, really?
 
 These questions should be resolved before I am done.
 
-* How does stuff like this get distributed? Just a JS file and some instructions, I think?
-* How are dependencies handled?
 * Consider how to write this up -- maybe even a "Try It Out" box?
 * Run prettier and/or eslint to get this shit ship shape
-* Can I make it a module and use the fancy new imports?
-* Should I make it an npm package with the right dependencies?
 * If I make it a module, can I also distribute it so that it can be easily imported?
-* How to test this mofo?
 * Retry with a clean install of node deps, which are:
   * d3-random, d3-format, jest 
+* Make the final package lockfile is _minimal_
+
+
+## Scratch
+
+* Looks like javascript has an f-string-like string formatting capability,
+  see [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
+  Does not appear to allow specifying precision like I need here though.
+* Consider exporting our main function as a default, see 
+  [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules#default_exports_versus_named_exports)
