@@ -58,11 +58,34 @@ export function get_optional_data(element, name, fallback) {
 };
 
 
-// TODO: this function is not used, kill it
-// update element with formatted sample from the distribution
-function update_sample(target, sampler, sample_format) {
-    target.innerHTML = sample_format(sampler());
-};
+
+/**
+* Create a sampler object to match the specification in the element dataset attributes
+*
+* @param element: DOM element with uncertaintext dataset attributes that define the
+*   sampler distribution and any distribution-specific parameters
+*
+* @returns: a d3-random sampler object, which returns a random sample from the specified  
+*   distribution when called
+*/
+export function get_sampler(element) {
+
+    let sampler = null; 
+
+    let distribution_name = get_required_data(target, 'uctDistrib');
+
+    if (distribution_name === 'normal') {
+        // normal (Gaussian) distribution
+        let mu    = parseFloat(get_required_data(target, 'uctMu'));
+        let sigma = parseFloat(get_required_data(target, 'uctSigma'));
+        sampler = randomNormal(mu, sigma);
+            
+    } else {
+        // unsupported distribution
+        throw 'No support for distribution:  ' + distribution_name;
+
+    }
+}
 
 
 // initialize all uncertaintext elements on the page
@@ -76,24 +99,8 @@ export default function uncertaintext() {
 
         try {
 
-            let sampler = null; 
+            let sampler = get_sampler(target);
 
-            // TODO: factor out a testable function for creating the sampler object
-            // distribution definition (required)
-            let distribution_name = get_required_data(target, 'uctDistrib');
-            
-            // sampling function (required)
-            if (distribution_name === 'normal') {
-                let mu    = parseFloat(get_required_data(target, 'uctMu'));
-                let sigma = parseFloat(get_required_data(target, 'uctSigma'));
-                sampler = randomNormal(mu, sigma);
-            
-            // TODO: add uniform distribution
-            
-            } else {
-                console.log('No support for distribution: "%s"', distribution_name);
-                // TODO: raise an error to be caught below
-            }
 
             // TODO: factor out a testable function for creating the format spec
             // format specifications (optional) 

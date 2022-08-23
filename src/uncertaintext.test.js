@@ -1,4 +1,4 @@
-import {get_required_data, get_optional_data} from './uncertaintext.js';
+import {get_required_data, get_optional_data, get_sampler} from './uncertaintext.js';
 
 
 test('get_required_data happy path', () => {
@@ -43,3 +43,6 @@ test('get_optional_data returns default if attribute is not defined', () => {
   // fail to retrieve undefined dataset element
   expect(get_optional_data(element, 'anUndefinedAttribute', 'default')).toBe('default');
 });
+
+
+
