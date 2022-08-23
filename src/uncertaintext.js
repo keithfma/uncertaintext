@@ -25,10 +25,17 @@ import {randomNormal} from "d3-random";
 import {format} from "d3-format";
 
 
-// TODO: rename to get_required
-// retrieve dataset attribute or fail if not set
-function required_data(element, name) {
-    return element.dataset[name]
+/**
+* Retrieve dataset attribute or die trying 
+* @param element: DOM element the data is attached to
+* @param name: the dataset attribute name, in the mangled form it is made available to js scripts (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+*/
+export function get_required(element, name) {
+    let value = element.dataset[name]
+    if (value === undefined) {
+        throw 'No dataset attribute: ' + name
+    }
+    return value;
 };
 
 
@@ -64,12 +71,12 @@ export default function uncertaintext() {
 
             // TODO: factor out a testable function for creating the sampler object
             // distribution definition (required)
-            let distribution_name = required_data(target, 'uctDistrib');
+            let distribution_name = get_required(target, 'uctDistrib');
             
             // sampling function (required)
             if (distribution_name === 'normal') {
-                let mu    = parseFloat(required_data(target, 'uctMu'));
-                let sigma = parseFloat(required_data(target, 'uctSigma'));
+                let mu    = parseFloat(get_required(target, 'uctMu'));
+                let sigma = parseFloat(get_required(target, 'uctSigma'));
                 sampler = randomNormal(mu, sigma);
             
             // TODO: add uniform distribution
