@@ -58,6 +58,20 @@ export function get_optional_data(element, name, fallback) {
 };
 
 
+// TODO: test me
+
+/**
+* TODO: document me
+*/
+function strictly_float(value) {
+    let parsed = parseFloat(value);
+    if (isNaN(parsed)) {
+        throw `Failed to cast value to float: {value}`;
+    };
+    return parsed;
+};
+
+
 
 /**
 * Create a sampler object to match the specification in the element dataset attributes
@@ -80,8 +94,8 @@ export function get_sampler(element) {
     if (name === 'normal') {
         // normal (Gaussian) distribution
         parameters = {
-            mu: parseFloat(get_required_data(element, 'uctMu')),
-            sigma: parseFloat(get_required_data(element, 'uctSigma')),
+            mu: strictly_float(get_required_data(element, 'uctMu')),
+            sigma: strictly_float(get_required_data(element, 'uctSigma')),
         };
         sampler = randomNormal(parameters.mu, parameters.sigma);
 
@@ -116,7 +130,7 @@ export default function uncertaintext() {
 
             // TODO: factor out a testable function for creating the format spec
             // format specifications (optional) 
-            let sample_format = format(get_optional_data(target, 'uctFormat', ' .2f'));
+            let formatter = format(get_optional_data(target, 'uctFormat', ' .2f'));
 
             // TODO: factor out a testable function for update interval 
             // update interval (optional) 
@@ -126,7 +140,7 @@ export default function uncertaintext() {
             // TODO: factor out a (testable) higher-level function that returns this update function
             // define update function
             let updater = function() {
-                target.innerHTML = sample_format(sampler());
+                target.innerHTML = formatter(sampler.sample());
             };
 
             // call once (to setup page an trigger errors where we catch them), then set to repeat

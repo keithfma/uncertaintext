@@ -18,7 +18,7 @@ test('get_required_data fails if attribute is not defined', () => {
   document.body.innerHTML = '<div id=test-element data-uct-distrib=normal></div>';
   let element = document.getElementById('test-element');
 
-  expect(() => get_required_data(element, 'anUndefinedAttribute')).toThrow()
+  expect(() => get_required_data(element, 'anUndefinedAttribute')).toThrow('No dataset attribute')
 });
 
 
@@ -57,18 +57,27 @@ test('get_sampler normal distribution happy path', () => {
 });
 
 
-/*
 test('get_sampler normal distribution fails for missing parameter', () => {
-    console.log('TODO');
+
+  document.body.innerHTML = '<div id=test-element data-uct-distrib=normal data-uct-mu=1></div>'; // no sigma
+  let element = document.getElementById('test-element');
+
+  expect(() => get_sampler(element)).toThrow('No dataset attribute');
 });
 
 
 test('get_sampler normal distribution fails for non-numeric parameter', () => {
-    console.log('TODO');
+
+  document.body.innerHTML = '<div id=test-element data-uct-distrib=normal data-uct-mu=1 data-uct-sigma=oogabooga></div>';
+  let element = document.getElementById('test-element');
+
+  expect(() => get_sampler(element)).toThrow('Failed to cast value to float');
 });
 
 
 test('get_sampler fails for unknown distribution', () => {
-    console.log('TODO');
+  document.body.innerHTML = '<div id=test-element data-uct-distrib=oogabooga></div>';
+  let element = document.getElementById('test-element');
+
+  expect(() => get_sampler(element)).toThrow('No support for distribution');
 });
-*/
