@@ -1,4 +1,9 @@
+import {jest} from '@jest/globals';
 import {get_required_data, get_optional_data, get_sampler} from './uncertaintext.js';
+import {randomNormal} from "d3-random";
+//import * as D3 from "d3-random";
+
+jest.mock(randomNormal);
 
 
 test('get_required_data happy path', () => {
@@ -45,4 +50,31 @@ test('get_optional_data returns default if attribute is not defined', () => {
 });
 
 
+test('get_sampler normal distribution happy path', () => {
 
+  // setup mock
+  //console.log(D3);
+  spy = jest.spyOn(D3, 'randomNormal');
+
+  let sampler = get_sampler(element);
+  console.log(sampler)
+  console.log(JSON.stringify(sampler, null, 4))
+
+});
+
+
+/*
+test('get_sampler normal distribution fails for missing parameter', () => {
+    console.log('TODO');
+});
+
+
+test('get_sampler normal distribution fails for non-numeric parameter', () => {
+    console.log('TODO');
+});
+
+
+test('get_sampler fails for unknown distribution', () => {
+    console.log('TODO');
+});
+*/

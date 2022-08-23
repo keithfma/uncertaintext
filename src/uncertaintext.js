@@ -72,12 +72,12 @@ export function get_sampler(element) {
 
     let sampler = null; 
 
-    let distribution_name = get_required_data(target, 'uctDistrib');
+    let distribution_name = get_required_data(element, 'uctDistrib');
 
     if (distribution_name === 'normal') {
         // normal (Gaussian) distribution
-        let mu    = parseFloat(get_required_data(target, 'uctMu'));
-        let sigma = parseFloat(get_required_data(target, 'uctSigma'));
+        let mu    = parseFloat(get_required_data(element, 'uctMu'));
+        let sigma = parseFloat(get_required_data(element, 'uctSigma'));
         sampler = randomNormal(mu, sigma);
             
     } else {
@@ -85,6 +85,8 @@ export function get_sampler(element) {
         throw 'No support for distribution:  ' + distribution_name;
 
     }
+
+    return sampler
 }
 
 
