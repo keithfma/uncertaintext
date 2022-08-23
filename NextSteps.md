@@ -5,13 +5,9 @@ A place to consider my next moves, and make sure all the TODOs get TODONE.
 
 ## Packaging
 
-I am fairly certain I want to use modules, so the new features don't expect the HTML to
-load dependencies explicity. 
-
-* Can I figure out how to make this work as a module directly?
-* Should I instead use some tool to package it up as a standalone script (with dependencies baked in)?
-
-I have really struggled to understand all the options here.
+* Package as a native module using webpack to "bake-in" the few dependencies
+* Not sure if I should publish on npm (probably)?
+* Not sure how to publish the packaged module on a CDN (maybe npm is enough)?
 
 
 ## Testing
@@ -23,17 +19,16 @@ What do we want to test, really?
 * That we initialize the random number generators as expected (we can trust thier values)
 * I think jest will give a fake DOM, but did not play well with modules
 
-## Old notes
+## Clean up
 
-These questions should be resolved before I am done.
-
-* Consider how to write this up -- maybe even a "Try It Out" box?
 * Run prettier and/or eslint to get this shit ship shape
-* If I make it a module, can I also distribute it so that it can be easily imported?
 * Retry with a clean install of node deps, which are:
   * d3-random, d3-format, jest 
 * Make the final package lockfile is _minimal_
 
+## Write up 
+
+Consider how to write this up -- maybe even a "Try It Out" box?
 
 ## Scratch
 
