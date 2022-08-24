@@ -58,12 +58,14 @@ export function get_optional_data(element, name, fallback) {
 };
 
 
-// TODO: test me
-
 /**
-* TODO: document me
+* Cast the input value to a float or die trying
+*
+* @param value: the object to cast to a float
+*
+* @return: a float
 */
-function strictly_float(value) {
+export function strictly_float(value) {
     let parsed = parseFloat(value);
     if (isNaN(parsed)) {
         throw `Failed to cast value to float: {value}`;
@@ -114,6 +116,40 @@ export function get_sampler(element) {
 }
 
 
+/**
+* Create formatter function that formats numbers as specifid in the element dataset attribute
+*
+* @param element: DOM element with dataset attribute defining the
+*   desired text format as understood by d3-format (e.g., .2f)
+*
+* @return: d3-format formatter function
+*/
+export function get_formatter(element) {
+
+    const default_spec = '.2f';
+    let spec = get_optional_data(element, 'uctFormat', default_spec);
+    return format(spec);
+
+}
+
+
+//TODO: the get_delay_ms comment is the gold standard, update the others to match
+
+
+/**
+* Read FPS (frames-per-second) from element dataset and convert to delay in milliseconds
+*
+* @param element: DOM element with data-uct-fps attribute defining the update interval
+*   in "frames-per-second"
+*
+* @return: update interval in milliseconds
+*/
+export function get_delay_ms(element) {
+    let fps = get_optional_data(target, 'uctFps', 5);
+    return 1. / fps * 1000.
+}
+
+
 // initialize all uncertaintext elements on the page
 export default function uncertaintext() {
 
@@ -126,16 +162,8 @@ export default function uncertaintext() {
         try {
 
             let sampler = get_sampler(target);
-
-
-            // TODO: factor out a testable function for creating the format spec
-            // format specifications (optional) 
-            let formatter = format(get_optional_data(target, 'uctFormat', ' .2f'));
-
-            // TODO: factor out a testable function for update interval 
-            // update interval (optional) 
-            let fps = get_optional_data(target, 'uctFps', 5);
-            let delay_ms = 1. / fps * 1000.
+            let formatter = get_formatter(target);
+            let delay_ms = get_delay_ms(target);
 
             // TODO: factor out a (testable) higher-level function that returns this update function
             // define update function
