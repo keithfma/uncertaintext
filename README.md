@@ -27,9 +27,6 @@ To build the package: *WIP!*
 
 To view the example page: *WIP*
 
-
-## Scratch
-
-Modules can't be served from the filesystem, so to view the example page, run:
-`python3 -m http.server example.html`
+Modules can't be served from the filesystem, so we must run a local server to view
+the example page. Run `python3 -m http.server 5000` to view the page at localhost:5000/html
 
