@@ -181,12 +181,11 @@ export function get_updater(element, sampler, formatter) {
 export default function uncertaintext() {
 
     let targets = document.getElementsByClassName("uncertaintext")
-
-    console.log(targets.length);
+    let target = null;
 
     for (let i = 0; i < targets.length; i++) {
 
-        let target = targets[i];
+        target = targets[i];
 
         try {
 

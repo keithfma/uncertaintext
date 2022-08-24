@@ -3,8 +3,11 @@
 <head>
   <title>Uncertaintext prototype example</title>
   <meta charset="UTF-8">
-  <script src=uncertaintext.js type=module ></script>
-  <script src=script.js type=module ></script>
+  <script src=./dist/uncertaintext.js type=module ></script>
+  <script type=module >
+    import uncertaintext from './dist/uncertaintext.js'
+    window.onload = function () {uncertaintext()};
+  </script>
 </head>
 
 <body>
