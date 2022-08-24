@@ -177,8 +177,6 @@ export function get_updater(element, sampler, formatter) {
 }
 
 
-// TODO: test!
-
 /**
 * Initialize all uncertaintext elements on the page
 */

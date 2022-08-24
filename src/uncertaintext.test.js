@@ -7,8 +7,6 @@ jest.useFakeTimers();
 jest.spyOn(global, 'setInterval');
 
 
-// TODO: split up tests into suites
-
 
 /**
 * Clean up the DOM between tests
@@ -70,13 +68,11 @@ describe('get_optional_data', () => {
   });
 
 
-  test('return default if attribute is not defined', () => {
+  test('happy path with default value', () => {
     let element = get_div('data-uct-distrib=normal');
     expect(get_optional_data(element, 'anUndefinedAttribute', 'default')).toBe('default');
   });
 
-
-  // TODO: missing expected fail test
 
 });
 
