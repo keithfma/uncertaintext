@@ -38,6 +38,17 @@ test('get_optional_data returns default if attribute is not defined', () => {
 });
 
 
+test('strictly_float happy path', () => {
+    let result = strictly_float('9.99')
+    expect(result).toBe(9.99)
+});
+
+
+test('strictly_float fails if value cannot be cast', () => {
+    expect(() => strictly_float('oh man, this is not a number')).toThrow('Failed to cast value');
+});
+
+
 test('get_sampler normal distribution happy path', () => {
 
   let element = get_div('data-uct-distrib=normal data-uct-mu=1 data-uct-sigma=2');
@@ -52,17 +63,6 @@ test('get_sampler normal distribution happy path', () => {
 });
 
 
-test('strictly_float happy path', () => {
-    let result = strictly_float('9.99')
-    expect(result).toBe(9.99)
-});
-
-
-test('strictly_float fails if value cannot be cast', () => {
-    expect(() => strictly_float('oh man, this is not a number')).toThrow('Failed to cast value');
-});
-
-
 test('get_sampler normal distribution fails for missing parameter', () => {
   let element = get_div('data-uct-distrib=normal data-uct-mu=1');  // no sigma
   expect(() => get_sampler(element)).toThrow('No dataset attribute');
@@ -71,6 +71,34 @@ test('get_sampler normal distribution fails for missing parameter', () => {
 
 test('get_sampler normal distribution fails for non-numeric parameter', () => {
   let element = get_div('data-uct-distrib=normal data-uct-mu=1 data-uct-sigma=oogabooga');
+  expect(() => get_sampler(element)).toThrow('Failed to cast value to float');
+});
+
+
+test('get_sampler uniform distribution happy path', () => {
+
+  let element = get_div(`data-uct-distrib=uniform data-uct-min=1 data-uct-max=2`);
+
+  let sampler = get_sampler(element);
+  let sample = sampler.sample();
+
+  expect(sampler.name).toBe('uniform');
+  expect(sampler.parameters.min).toBe(1);
+  expect(sampler.parameters.max).toBe(2);
+  expect(typeof sample).toBe('number');
+  expect(sample).toBeGreaterThanOrEqual(1);
+  expect(sample).toBeLessThanOrEqual(2);
+});
+
+
+test('get_sampler uniform distribution fails for missing parameter', () => {
+  let element = get_div('data-uct-distrib=uniform data-uct-min=1');  // no max
+  expect(() => get_sampler(element)).toThrow('No dataset attribute');
+});
+
+
+test('get_sampler uniform distribution fails for non-numeric parameter', () => {
+  let element = get_div('data-uct-distrib=uniform data-uct-min=1 data-uct-max=oogabooga');
   expect(() => get_sampler(element)).toThrow('Failed to cast value to float');
 });
 

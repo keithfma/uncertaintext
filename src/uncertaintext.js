@@ -9,14 +9,14 @@
 // your distributions as <span> elements with the following attributes:
 //  * class=uncertaintext: required, marks the span element for uncertaintext to find and update
 //  * data-uct-distrib=[string], required, name of the distribution to sample from, currently supported
-//      names are: normal.
+//      names are: uniform, normal.
+//  * data-uct-min=[float]: required for uniform distribution, minimum value
+//  * data-uct-max=[float]: required for uniform distribution, maximum value
 //  * data-uct-mu=[float]: required for normal distribution, mean
 //  * data-uct-sigma=[float]: required for normal distribution, standard deviation
 //  * data-uct-format=[string]: optional, printf-style format string to apply to the sample,
 //      see https://github.com/d3/d3-format
 //  * data-uct-fps=[int]: optional, update frequency in "frames" per second
-//
-// TODO: update for uniform distribution
 //
 // dependencies:
 //  * d3-format: https://github.com/d3/d3-format
@@ -31,7 +31,8 @@ import {format} from "d3-format";
 ** Retrieve dataset attribute or die trying 
 *
 * @param element: DOM element the data is attached to
-* @param name: the dataset attribute name, in the mangled form it is made available to js scripts (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+* @param name: the dataset attribute name, in the mangled form it is made available
+*   to js scripts (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
 *
 * @return: the value of the dataset attribute
 */
@@ -47,7 +48,8 @@ export function get_required_data(element, name) {
 * Retrieve dataset attribute or default value if it is not set
 *
 * @param element: DOM element the data is attached to
-* @param name: the dataset attribute name, in the mangled form it is made available to js scripts (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+* @param name: the dataset attribute name, in the mangled form it is made available
+*   to js scripts (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
 * @param fallback: default value to return if the attribute is not set
 *
 * @return: the value of the dataset attribute or default
