@@ -89,7 +89,7 @@ test('get_formatter happy path', () => {
 
 
 test('get_formatter happy path with default value', () => {
-  let element = get_div('');  // no format spec included
+  let element = get_div('');  // no format spec set 
   let formatter = get_formatter(element);
   expect(formatter(9.99)).toBe('9.99');
 });
@@ -100,3 +100,22 @@ test('get_formatter fail for invalid format spec', () => {
   expect(() => get_formatter(element)).toThrow('invalid format');
 });
 
+
+test('get_delay_ms happy path', () => {
+  let element = get_div('data-uct-fps=2');  
+  let result = get_delay_ms(element);
+  expect(result).toBe(500);
+});
+
+
+test('get_delay_ms happy path with default value', () => {
+  let element = get_div('');  // no fps set 
+  let result = get_delay_ms(element);
+  expect(result).toBe(200);
+});
+
+
+test('get_delay_ms fail for invalid format spec', () => {
+  let element = get_div('data-uct-fps=abcdefg');  // bad fps value
+  expect(() => get_delay_ms(element)).toThrow('Failed to cast value to float');
+});

@@ -145,7 +145,7 @@ export function get_formatter(element) {
 * @return: update interval in milliseconds
 */
 export function get_delay_ms(element) {
-    let fps = get_optional_data(target, 'uctFps', 5);
+    let fps = strictly_float(get_optional_data(element, 'uctFps', 5));
     return 1. / fps * 1000.
 }
 
