@@ -2,18 +2,21 @@ import {jest} from '@jest/globals';
 import {get_required_data, get_optional_data, strictly_float, get_sampler, get_formatter, get_delay_ms, get_updater} from './uncertaintext.js';
 import uncertaintext from './uncertaintext.js'  // default import
 import {format} from "d3-format";
-import {JSDOM} from "jsdom";
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setInterval');
 
 
-/**
-* TODO
-*/
-function get_document() {
+// TODO: split up tests into suites
+// TODO: split get_div and add_div
+// TODO: only clear DOM when needed
 
-}
+
+afterEach(() => {
+    while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+    }
+});
 
 
 /**
@@ -237,12 +240,14 @@ test('uncertaintext report errors and continue', () => {
     expect(uniform_element_1.innerHTML).toBe('1.0');
     expect(uniform_element_2.innerHTML).toBe('2.0');
 
+    // confirm invalid element is marked invalid
+    expect(broken_element.innerHTML).toBe('[error]');
+
     // confirm intervals are set for valid elements
     expect(setInterval).toHaveBeenCalledTimes(2);
     expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 1000);  // same as fps=1
     expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 500);  // same as fps=2
 
-    // confirm invalid element is marked invalid
 });
 
 
