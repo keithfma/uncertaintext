@@ -2,9 +2,18 @@ import {jest} from '@jest/globals';
 import {get_required_data, get_optional_data, strictly_float, get_sampler, get_formatter, get_delay_ms, get_updater} from './uncertaintext.js';
 import uncertaintext from './uncertaintext.js'  // default import
 import {format} from "d3-format";
+import {JSDOM} from "jsdom";
 
 jest.useFakeTimers();
 jest.spyOn(global, 'setInterval');
+
+
+/**
+* TODO
+*/
+function get_document() {
+
+}
 
 
 /**
@@ -209,10 +218,31 @@ test('uncertaintext happy path', () => {
 });
 
 
-/* 
 test('uncertaintext report errors and continue', () => {
-    console.log('NOT IMPLEMENTED');
+    // *broken* distribution we expect to be marked and ignored
+    let broken_element =  get_div('class=uncertaintext', 'data-uct-distrib=invalid');
+
+    // two uniform distributions with min == max, so we know it's expected value
+    let uniform_element_1 = get_div('class=uncertaintext', 'data-uct-distrib=uniform', 'data-uct-min=1', 'data-uct-max=1', 'data-uct-format=.1f', 'data-uct-fps=1');
+    let uniform_element_2 = get_div('class=uncertaintext', 'data-uct-distrib=uniform', 'data-uct-min=2', 'data-uct-max=2', 'data-uct-format=.1f', 'data-uct-fps=2');
+
+    // confirm no text in elements at test start
+    expect(broken_element.innerHTML).toBe('');
+    expect(uniform_element_1.innerHTML).toBe('');
+    expect(uniform_element_2.innerHTML).toBe('');
+
+    uncertaintext();
+    
+    // confirm valid elements are updated 
+    expect(uniform_element_1.innerHTML).toBe('1.0');
+    expect(uniform_element_2.innerHTML).toBe('2.0');
+
+    // confirm intervals are set for valid elements
+    expect(setInterval).toHaveBeenCalledTimes(2);
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 1000);  // same as fps=1
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 500);  // same as fps=2
+
+    // confirm invalid element is marked invalid
 });
-*/
 
 

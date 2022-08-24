@@ -173,7 +173,6 @@ export function get_delay_ms(element) {
 export function get_updater(element, sampler, formatter) {
     return function() {
         element.innerHTML = formatter(sampler.sample());
-        console.log('called updater');
     };
 }
 
@@ -186,6 +185,8 @@ export function get_updater(element, sampler, formatter) {
 export default function uncertaintext() {
 
     let targets = document.getElementsByClassName("uncertaintext")
+
+    console.log(targets.length);
 
     for (let i = 0; i < targets.length; i++) {
 

@@ -30,6 +30,7 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
-    "transform": {}
+    "transform": {},
+    "clearMocks": true
   }
 }
