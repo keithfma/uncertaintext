@@ -16,12 +16,14 @@
 //      see https://github.com/d3/d3-format
 //  * data-uct-fps=[int]: optional, update frequency in "frames" per second
 //
+// TODO: update for uniform distribution
+//
 // dependencies:
 //  * d3-format: https://github.com/d3/d3-format
 //  * d3-random: https://github.com/d3/d3-random
 ////
 
-import {randomNormal} from "d3-random";
+import {randomUniform, randomNormal} from "d3-random";
 import {format} from "d3-format";
 
 
@@ -101,6 +103,13 @@ export function get_sampler(element) {
         };
         sampler = randomNormal(parameters.mu, parameters.sigma);
 
+    } else if (name == 'uniform') {
+        // uniform distribution
+        parameters = {
+            min: strictly_float(get_required_data(element, 'uctMin')),
+            max: strictly_float(get_required_data(element, 'uctMax')),
+        };
+        sampler = randomUniform(parameters.min, parameters.max);
             
     } else {
         // unsupported distribution
@@ -150,6 +159,25 @@ export function get_delay_ms(element) {
 }
 
 
+
+/** 
+* Create updater function which updates element's innerHTML when called
+*
+* @param element: the element to be updated
+* @param sampler: sampler object, as returned by get_sampler
+* @param formatter: formatter object, as returned by get_formatter
+*
+* @return: update function
+*/
+export function get_updater(element, sampler, formatter) {
+    return function() {
+        element.innerHTML = formatter(sampler.sample());
+    };
+}
+
+
+// TODO: document and test!
+
 // initialize all uncertaintext elements on the page
 export default function uncertaintext() {
 
@@ -161,22 +189,20 @@ export default function uncertaintext() {
 
         try {
 
+            // initialize update function and delay from element dataset attributes
             let sampler = get_sampler(target);
             let formatter = get_formatter(target);
             let delay_ms = get_delay_ms(target);
+            let updater = get_updater(target, sampler, formatter);
 
-            // TODO: factor out a (testable) higher-level function that returns this update function
-            // define update function
-            let updater = function() {
-                target.innerHTML = formatter(sampler.sample());
-            };
-
-            // call once (to setup page an trigger errors where we catch them), then set to repeat
+            // call once (to setup page an trigger errors where we catch them)
             updater();
+
+            // update on interval
             setInterval(updater, delay_ms);        
 
         } catch(err) {
-            // indicate error, and continue on to the next element 
+            // indicate error and continue on to the next element 
             console.log(err);
             target.innerHTML = '[error]';
         }    

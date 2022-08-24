@@ -1,5 +1,5 @@
 import {jest} from '@jest/globals';
-import {get_required_data, get_optional_data, strictly_float, get_sampler, get_formatter, get_delay_ms} from './uncertaintext.js';
+import {get_required_data, get_optional_data, strictly_float, get_sampler, get_formatter, get_delay_ms, get_updater} from './uncertaintext.js';
 import {format} from "d3-format";
 
 
@@ -118,4 +118,20 @@ test('get_delay_ms happy path with default value', () => {
 test('get_delay_ms fail for invalid format spec', () => {
   let element = get_div('data-uct-fps=abcdefg');  // bad fps value
   expect(() => get_delay_ms(element)).toThrow('Failed to cast value to float');
+});
+
+
+test('get_updater happy path', () => {
+    // create empty div and simple sampler and formatter
+    let element = get_div('');  
+    let sampler = {sample: () => 'TEST'};
+    let formatter = x => 'FORMATTED-' + x;
+    expect(element.innerHTML).toBe('');  // confirm no text at test start
+
+    // create and invoke update function
+    let updater = get_updater(element, sampler, formatter);
+    updater();
+
+    // check for updated element text
+    expect(element.innerHTML).toBe('FORMATTED-TEST');
 });
