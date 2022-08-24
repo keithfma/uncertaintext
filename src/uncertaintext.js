@@ -81,9 +81,9 @@ export function strictly_float(value) {
 
 
 /**
-* Create a sampler object to match the specification in the element dataset attributes
+* Read distribution definition from element dataset and create a sampler object to match
 *
-* @param element: DOM element with uncertaintext dataset attributes that define the
+* @param element: DOM element with data-uct-* attributes that define the
 *   sampler distribution and any distribution-specific parameters
 *
 * @returns: an object with the following properties:
@@ -129,9 +129,9 @@ export function get_sampler(element) {
 
 
 /**
-* Create formatter function that formats numbers as specifid in the element dataset attribute
+* Read format spec from element dataset and return formatter function
 *
-* @param element: DOM element with dataset attribute defining the
+* @param element: DOM element with data-uct-format attribute defining the
 *   desired text format as understood by d3-format (e.g., .2f)
 *
 * @return: d3-format formatter function
@@ -142,8 +142,6 @@ export function get_formatter(element) {
     return format(spec);
 }
 
-
-//TODO: the get_delay_ms comment is the gold standard, update the others to match
 
 
 /**
