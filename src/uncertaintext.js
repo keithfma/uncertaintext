@@ -1,27 +1,28 @@
-// Uncertaintext: uncertain text for uncertain numbers
-//
-// Uncertaintext provides dynamic styling for representing probability distributions. The core idea is
-// to express probabalistic values as series of random samples from the distribution, rather than the
-// usual summary statistics. The aim is to give readers a "gut feel" for the uncertainty, and have
-// a little fun doing it.
-//
-// To use, include this script in your webpage as a module, and then define
-// your distributions as <span> elements with the following attributes:
-//  * class=uncertaintext: required, marks the span element for uncertaintext to find and update
-//  * data-uct-distrib=[string], required, name of the distribution to sample from, currently supported
-//      names are: uniform, normal.
-//  * data-uct-min=[float]: required for uniform distribution, minimum value
-//  * data-uct-max=[float]: required for uniform distribution, maximum value
-//  * data-uct-mu=[float]: required for normal distribution, mean
-//  * data-uct-sigma=[float]: required for normal distribution, standard deviation
-//  * data-uct-format=[string]: optional, printf-style format string to apply to the sample,
-//      see https://github.com/d3/d3-format
-//  * data-uct-fps=[int]: optional, update frequency in "frames" per second
-//
-// dependencies:
-//  * d3-format: https://github.com/d3/d3-format
-//  * d3-random: https://github.com/d3/d3-random
-////
+/** 
+* Uncertaintext: uncertain text for uncertain numbers
+*
+* Uncertaintext provides dynamic styling for representing probability distributions. The core idea is
+* to express probabalistic values as series of random samples from the distribution, rather than the
+* usual summary statistics. The aim is to give readers a "gut feel" for the uncertainty, and have
+* a little fun doing it.
+*
+* To use, include this script in your webpage as a module, and then define
+* your distributions as <span> elements with the following attributes:
+*  * class=uncertaintext: required, marks the span element for uncertaintext to find and update
+*  * data-uct-distrib=[string], required, name of the distribution to sample from, currently supported
+*      names are: uniform, normal.
+*  * data-uct-min=[float]: required for uniform distribution, minimum value
+*  * data-uct-max=[float]: required for uniform distribution, maximum value
+*  * data-uct-mu=[float]: required for normal distribution, mean
+*  * data-uct-sigma=[float]: required for normal distribution, standard deviation
+*  * data-uct-format=[string]: optional, printf-style format string to apply to the sample,
+*      see https:* github.com/d3/d3-format
+*  * data-uct-fps=[int]: optional, update frequency in "frames" per second
+*
+* Dependencies:
+*  * d3-format: https:* github.com/d3/d3-format
+*  * d3-random: https:* github.com/d3/d3-random
+*/
 
 import {randomUniform, randomNormal} from "d3-random";
 import {format} from "d3-format";
@@ -136,11 +137,9 @@ export function get_sampler(element) {
 * @return: d3-format formatter function
 */
 export function get_formatter(element) {
-
-    const default_spec = '.2f';
+    const default_spec = ' .2f';  // note: leading space in default makes room for negative sign
     let spec = get_optional_data(element, 'uctFormat', default_spec);
     return format(spec);
-
 }
 
 
@@ -174,13 +173,16 @@ export function get_delay_ms(element) {
 export function get_updater(element, sampler, formatter) {
     return function() {
         element.innerHTML = formatter(sampler.sample());
+        console.log('called updater');
     };
 }
 
 
-// TODO: document and test!
+// TODO: test!
 
-// initialize all uncertaintext elements on the page
+/**
+* Initialize all uncertaintext elements on the page
+*/
 export default function uncertaintext() {
 
     let targets = document.getElementsByClassName("uncertaintext")
