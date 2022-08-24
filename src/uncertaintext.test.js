@@ -3,6 +3,9 @@ import {get_required_data, get_optional_data, strictly_float, get_sampler, get_f
 import uncertaintext from './uncertaintext.js'  // default import
 import {format} from "d3-format";
 
+jest.useFakeTimers();
+jest.spyOn(global, 'setInterval');
+
 
 /**
 * Add a <div> to the test DOM and set the input attributes
@@ -183,10 +186,10 @@ test('get_updater happy path', () => {
 test('uncertaintext happy path', () => {
 
     // uniform distribution with min == max, so we know it's expected value
-    let uniform_element = get_div('class=uncertaintext', 'data-uct-distrib=uniform', 'data-uct-min=2', 'data-uct-max=2', 'data-uct-format=.1f');
+    let uniform_element = get_div('class=uncertaintext', 'data-uct-distrib=uniform', 'data-uct-min=2', 'data-uct-max=2', 'data-uct-format=.1f', 'data-uct-fps=1');
 
     // normal distribution with arbitrary mu and sigma
-    let normal_element =  get_div('class=uncertaintext', 'data-uct-distrib=normal', 'data-uct-mu=0', 'data-uct-sigma=1', 'data-uct-format=.2f');
+    let normal_element =  get_div('class=uncertaintext', 'data-uct-distrib=normal', 'data-uct-mu=0', 'data-uct-sigma=1', 'data-uct-format=.2f', 'data-uct-fps=2');
     const normal_element_regex = /\-?\d\.\d\d/;
 
     // confirm no text in elements at test start
@@ -199,8 +202,10 @@ test('uncertaintext happy path', () => {
     expect(uniform_element.innerHTML).toBe('2.0');
     expect(normal_element.innerHTML).toMatch(normal_element_regex);
 
-    // TODO: test timers
-
+    // confirm intervals are set
+    expect(setInterval).toHaveBeenCalledTimes(2);
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 1000);  // same as fps=1
+    expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 500);  // same as fps=2
 });
 
 
