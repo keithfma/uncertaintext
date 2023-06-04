@@ -50,12 +50,11 @@ This project uses:
 * `webpack` to bundle up the package and its dependencies as a single native module 
 * `jest` to handle testing
 
-To run tests: *WIP!*
+To run tests: `yarn test`
 
-To build the package: *WIP!*
+To build the package: `yarn build` or `yarn build-dev` to make a human readable version.
+
+TODO: can we build and include the example page 
 
 To view the example page: *WIP*
-
-Modules can't be served from the filesystem, so we must run a local server to view
-the example page. Run `python3 -m http.server 5000` to view the page at localhost:5000/html
 
