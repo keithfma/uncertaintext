@@ -14,9 +14,23 @@ Checkout the example (TODO: make the word "example" a hyperlink) to see it in ac
 ## Usage
 
 Include the uncertaintext module [TODO: make "uncertaintext module" a link to
-the distribution) in your webpage and run the main function: 
+the distribution] in your webpage and run the main function: 
 
-TODO: add example
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>How to include uncertaintext in your webpage</title>
+  <script src=./uncertaintext.js type=module></script>
+  <script type=module >
+    import uncertaintext from './uncertaintext.js'
+    window.onload = function () {uncertaintext()};
+  </script>
+</head>
+<body>
+Wow! So easy!
+</body>
+```
 
 You will also want to update styling so that uncertaintext elements use a monospace font. Otherwise, 
 unequal character widths will play havoc with your layout when the values are updated:
@@ -51,11 +65,25 @@ This project uses:
 * `webpack` to bundle up the package and its dependencies as a single native module 
 * `jest` to handle testing
 
+To install dependencies: `yarn install`
+
 To run tests: `yarn test`
 
 To build the package: `yarn build` or `yarn build-dev` to make a human readable version.
 
-TODO: can we build and include the example page 
+To view the example page locally: You will need to host in with a local
+webserver (so that the `uncertaintext` module works). The node package
+[http-server](https://www.npmjs.com/package/http-server)], installed when you
+run `yarn install`, does the job nicely. The following command will host the
+example page at http://localhost:4000:
 
-To view the example page: *WIP*
+```shell
+npx http-server docs -a localhost -p 4000
+```
+
+Note that the example page uses a copy of `uncertaintext.js` in the `docs` folder.
+If you update uncertaintext, you will need to rebuild the module and copy it to 
+that folder to see the changes in the example.
+
+
 
