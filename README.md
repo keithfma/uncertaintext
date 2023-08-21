@@ -4,16 +4,17 @@ Uncertaintext provides dynamic styling for representing probability distribution
 
 The core idea is to express probabalistic values as series of random samples
 from the distribution, rather than the usual summary statistics. The aim is to
-give readers a "gut feel" for the uncertainty, and have a little fun doing it.
+give readers a "gut feel" for the uncertainty and have a little fun doing it.
 
-The MVP is just a single JS file, `uncertaintext.js`, which applies dynamic formats
-to specially-tagged HTML elements when included in a webpage. This repo also
-includes a simple example website to show off the basic functionality.
+Uncertaintext is available as a single JS file, `uncertaintext.js`, which applies
+dynamic formats to specially-tagged HTML elements. 
+
+Checkout the example (TODO: make the word "example" a hyperlink) to see it in action.
 
 ## Usage
 
-Include the uncertaintext module [LINK TO RELEASE NEEDED] in your webpage and run the 
-main function: 
+Include the uncertaintext module [TODO: make "uncertaintext module" a link to
+the distribution) in your webpage and run the main function: 
 
 TODO: add example
 
@@ -25,7 +26,7 @@ TODO: add example
 Then, define your uncertain numerical values as probability distributions and uncertext will insert and
 update the displayed vaules. 
 
-Each value should be a <span> element with the following attributes:
+Each uncertain value should be a <span> element with the following attributes:
  * class=uncertaintext: required, marks the span element for uncertaintext to find and update
  * data-uct-distrib=[string], required, name of the distribution to sample from, currently supported
      names are: uniform, normal.
