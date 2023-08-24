@@ -8,39 +8,86 @@
     import uncertaintext from './uncertaintext.js'
     window.onload = function () {uncertaintext()};
   </script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
   <h1>Uncertaintext Example</h1>
 
-  <p>Example text modified from <a href=https://www2.southeastern.edu/Academics/Faculty/rallain/plab194/error.html>here</a></p>
-
   <p>
-  Try determining the thickness of a CD case from this picture.
+    Uncertaintext is designed to be simple to use, but with enough flexibility
+    to show your uncertain numbers just the way you want them. 
 
-  <ul>
-    <li>How can you get the most precise measurement of the thickness of a single CD case from this picture? (Even though the ruler is blurry, you can determine the thickness of a single case to within less than 0.1 cm.)</li>
-    <li>Use the method you just described to determine the thickness of a single case (and the uncertainty in that measurement)</li>
-    <li>What implicit assumption(s) are you making about the CD cases?</li>
-  </ul>
+    For example, here is an uncertain number with a normal distribution with 
+    a mean of 10 and standard deviation of 2, updated twice a second, and 
+    displayed as an integer:
+  </p>
+    
+  <p style="text-align:center">
+    <span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format=".0f" data-uct-fps=2></span>
   </p>
 
   <p>
-  Answers: The best way to do the measurement is to measure the thickness of
-  the stack and divide by the number of cases in the stack. That way, the
-  uncertainty in the measurement is spread out over all 36 CD cases. It's hard to
-  read the ruler in the picture any closer than within about 0.2 cm (see previous
-  example). The stack goes starts at about the 16.5 cm mark and ends at about the
-  54.5 cm mark, so the stack is about 
-  <span class=uncertaintext data-uct-distrib=normal data-uct-mu=38 data-uct-sigma=0.2 data-uct-format="2.2f"></span> cm
-  long. Divide the length of the stack by the number of CD cases in the stack
-  (36) to get the thickness of a single case:
-  <span class=uncertaintext data-uct-distrib=normal data-uct-mu=1.056 data-uct-sigma=0.006 data-uct-format="1.3f" data-uct-fps=1></span> cm.
-  By "spreading out" the uncertainty over the entire stack of cases, you can get
-  a measurement that is more precise than what can be determined by measuring
-  just one of the cases with the same ruler. We are assuming that all the cases
-  are the same thickness and that there is no space between any of the cases.
+    The HTML element that accomplishes this miracle is a little verbose, but
+    pretty easy to understand: 
+  </p>
+
+  <p><code>
+  &lt;span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format=&quot;.0f&quot; data-uct-fps=2&gt;&lt;/span&gt;
+  </code></p>
+
+  <p>
+    Next, let's take some of uncertaintext's flexibility out for a spin. The
+    table below shows that same uncertain number with a different formats (in the
+    rows) and refresh rates (in the columns).
+  </p>
+
+  <p>
+    <table>
+      <tr>
+        <th></th>
+        <th>1</th>
+        <th>2</th>
+        <th>4</th>
+        <th>8</th>
+        <th>16</th>
+        <th>32</th>
+      </tr>
+      <tr>
+        <th>2.0f</th>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="2.0f" data-uct-fps=1></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="2.0f" data-uct-fps=2></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="2.0f" data-uct-fps=4></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="2.0f" data-uct-fps=8></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="2.0f" data-uct-fps=16></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="2.0f" data-uct-fps=32></span></td>
+      </tr>
+      <tr>
+        <th>5.2f</th>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.2f" data-uct-fps=1></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.2f" data-uct-fps=2></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.2f" data-uct-fps=4></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.2f" data-uct-fps=8></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.2f" data-uct-fps=16></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.2f" data-uct-fps=32></span></td>
+      </tr>
+      <tr>
+        <th>5.3e</th>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.3e" data-uct-fps=1></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.3e" data-uct-fps=2></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.3e" data-uct-fps=4></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.3e" data-uct-fps=8></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.3e" data-uct-fps=16></span></td>
+        <td><span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format="5.3e" data-uct-fps=32></span></td>
+      </tr>
+    </table> 
+  </p>
+
+  <p>
+    That's it! Enjoy and use it wisely. To quote the great Homer Simpson:
+    "People can come up with statistics to prove anything, Forty percent of all
+    people know that."
   </p>
 
 </body>
