@@ -1,10 +1,9 @@
 import {jest} from '@jest/globals';
 import {get_required_data, get_optional_data, strictly_float, get_sampler, get_formatter, get_delay_ms, get_updater} from './uncertaintext.js';
 import uncertaintext from './uncertaintext.js'  // default import
-import {format} from "d3-format";
 
 jest.useFakeTimers();
-jest.spyOn(global, 'setInterval');
+jest.spyOn(global, 'setInterval'); /* eslint no-undef: 0 */
 
 
 
@@ -35,11 +34,11 @@ function get_div() {
     let name = attrib.substr(0, index);
     let value = attrib.substr(index + 1);
     div.setAttribute(name, value);
-  };
+  }
 
   document.body.appendChild(div);
   return div;
-};
+}
 
 
 describe('get_required_data', () => {
@@ -238,7 +237,7 @@ describe('uncertaintext', () => {
   
       // normal distribution with arbitrary mu and sigma
       let normal_element =  get_div('class=uncertaintext', 'data-uct-distrib=normal', 'data-uct-mu=0', 'data-uct-sigma=1', 'data-uct-format=.2f', 'data-uct-fps=2');
-      const normal_element_regex = /\-?\d\.\d\d/;
+      const normal_element_regex = /-?\d\.\d\d/;
   
       // confirm no text in elements at test start
       expect(uniform_element.innerHTML).toBe('');
