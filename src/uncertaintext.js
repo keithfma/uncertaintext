@@ -24,7 +24,7 @@ export function get_required_data(element, name) {
         return element.dataset[name]
     }
     throw 'No dataset attribute: ' + name
-};
+}
 
 
 /**
@@ -42,7 +42,7 @@ export function get_optional_data(element, name, fallback) {
         return element.dataset[name]
     }
     return fallback
-};
+}
 
 
 /**
@@ -53,12 +53,12 @@ export function get_optional_data(element, name, fallback) {
 * @return: a float
 */
 export function strictly_float(value) {
-    let parsed = parseFloat(value);
+    let parsed = parseFloat(value)
     if (isNaN(parsed)) {
         throw `Failed to cast value to float: {value}`;
-    };
+    }
     return parsed;
-};
+}
 
 
 
@@ -136,7 +136,7 @@ export function get_formatter(element) {
 */
 export function get_delay_ms(element) {
     let fps = strictly_float(get_optional_data(element, 'uctFps', 5));
-    return 1. / fps * 1000.
+    return 1. / fps * 1000.  /* eslint no-loss-of-precision: 0 */
 }
 
 
@@ -190,4 +190,4 @@ export default function uncertaintext() {
         }    
     } 
 
-};
+}
