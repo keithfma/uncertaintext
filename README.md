@@ -33,13 +33,8 @@ Wow! So easy!
 </body>
 ```
 
-You will also want to update styling so that uncertaintext elements use a monospace font. Otherwise, 
-unequal character widths will play havoc with your layout when the values are updated:
-
-:warning:TODO: add example:warning:
-
-Then, define your uncertain numerical values as probability distributions and uncertext will insert and
-update the displayed vaules. 
+Then, define your uncertain numerical values as probability distributions and
+uncertaintext will insert and update the displayed vaules. 
 
 Each uncertain value should be a `<span>` element with the following attributes:
  * class=uncertaintext: required, marks the span element for uncertaintext to find and update
@@ -87,6 +82,4 @@ npx http-server docs -a localhost -p 4000
 Note that the example page uses a copy of `uncertaintext.js` in the `docs` folder.
 If you update uncertaintext, you will need to rebuild the module and copy it to 
 that folder to see the changes in the example.
-
-
 
