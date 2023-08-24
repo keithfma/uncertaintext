@@ -9,8 +9,8 @@ give readers a "gut feel" for the uncertainty and have a little fun doing it.
 Uncertaintext is available as a single JS file, `uncertaintext.js`, which applies
 dynamic formats to specially-tagged HTML elements. 
 
-Checkout the example [:warning:TODO: make the word "example" a hyperlink :warning:] to
-see it in action.
+Check out the [example page](https://keithfma.github.io/uncertaintext)  to see
+it in action.
 
 ## Usage
 
@@ -74,11 +74,11 @@ To run tests: `yarn test`
 
 To build the package: `yarn build` or `yarn build-dev` to make a human readable version.
 
-To view the example page locally: You will need to host in with a local
-webserver (so that the `uncertaintext` module works). The node package
-[http-server](https://www.npmjs.com/package/http-server), installed when you
-run `yarn install`, does the job nicely. The following command will host the
-example page at `http://localhost:4000`:
+To view the example page (located at `docs/index.html`) locally: You will need
+to host in with a local webserver (so that the `uncertaintext` module works).
+The node package [http-server](https://www.npmjs.com/package/http-server),
+installed when you run `yarn install`, does the job nicely. The following
+command will host the example page at `http://localhost:4000`:
 
 ```shell
 npx http-server docs -a localhost -p 4000
