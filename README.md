@@ -37,16 +37,16 @@ Then, define your uncertain numerical values as probability distributions and
 uncertaintext will insert and update the displayed vaules. 
 
 Each uncertain value should be a `<span>` element with the following attributes:
- * class=uncertaintext: required, marks the span element for uncertaintext to find and update
- * data-uct-distrib=[string], required, name of the distribution to sample from, currently supported
+ * `class=uncertaintext`: required, marks the span element for uncertaintext to find and update
+ * `data-uct-distrib=[string]`, required, name of the distribution to sample from, currently supported
      names are: uniform, normal.
- * data-uct-min=[float]: uniform distribution only, minimum value
- * data-uct-max=[float]: uniform distribution only, maximum value
- * data-uct-mu=[float]: normal distribution only, mean
- * data-uct-sigma=[float]: normal distribution only, standard deviation
- * data-uct-format=[string]: printf-style format string to apply to the sample,
+ * `data-uct-min=[float]`: uniform distribution only, minimum value
+ * `data-uct-max=[float]`: uniform distribution only, maximum value
+ * `data-uct-mu=[float]`: normal distribution only, mean
+ * `data-uct-sigma=[float]`: normal distribution only, standard deviation
+ * `data-uct-format=[string]`: printf-style format string to apply to the sample,
      see [d3-format](https//github.com/d3/d3-format) for help
- * data-uct-fps=[int]: optional, update frequency in "frames" per second
+ * `data-uct-fps=[int`]: optional, update frequency in "frames" per second
 
 For example, to display an uncertain value with a standard normal distribution,
 two decimal places of precision, and update once a second:
