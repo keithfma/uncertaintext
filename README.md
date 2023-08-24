@@ -1,13 +1,15 @@
 # Uncertaintext: uncertain text for uncertain numbers
 
-Uncertaintext provides dynamic styling for representing probability distributions.
+Uncertaintext provides dynamic styling for representing values and thier
+uncertainties in HTML.
 
 The core idea is to express probabalistic values as series of random samples
-from the distribution, rather than the usual summary statistics. The aim is to
-give readers a "gut feel" for the uncertainty and have a little fun doing it.
+from some underlying distribution, rather than the usual summary statistics.
+This "slippery" representation aims to give readers a gut feel for the
+uncertainty, and have a little fun doing it.
 
-Uncertaintext is available as a single JS file, `uncertaintext.js`, which applies
-dynamic formats to specially-tagged HTML elements. 
+Uncertaintext is available as a single JS file  which applies dynamic formats
+to specially-tagged HTML elements. 
 
 Check out the [example page](https://keithfma.github.io/uncertaintext)  to see
 it in action.
