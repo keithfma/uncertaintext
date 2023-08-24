@@ -42,7 +42,7 @@ Each uncertain value should be a `<span>` element with the following attributes:
 | ----------| ------------|
 | `class=uncertaintext` | Required. Marks the span element for uncertaintext to find and update. |
 | `data-uct-distrib=[string]` | Required, name of the distribution to sample from. Currently supported names are: uniform, normal. |
-| `data-uct-format=[string]` | Optional. Printf-style format string to apply to the sample. Default is `" .2f"`. See [d3-format](https//github.com/d3/d3-format) for help |
+| `data-uct-format=[string]` | Optional. Printf-style format string to apply to the sample. Default is `" .2f"`. See [d3-format](https//github.com/d3/d3-format) for help. |
 | `data-uct-fps=[int]` |  Optional. Update frequency in "frames" per second. Default is `5`. |
 | `data-uct-min=[float]` | Uniform distribution only. Minimum value. |
 | `data-uct-max=[float]` | Uniform distribution only. Maximum value. |
@@ -53,7 +53,7 @@ For example, to display an uncertain value with a standard normal distribution,
 two decimal places of precision, and update once a second:
 
 ```html
-<span class=uncertaintext data-uct-distrib=normal data-uct-mu=0 data-uct-sigma=1 data-uct-format=".2f"></span>
+<span class=uncertaintext data-uct-distrib=normal data-uct-mu=0 data-uct-sigma=1 data-uct-format=".2f" data-uct-fps=1></span>
 ```
 
 
