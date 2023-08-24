@@ -1,7 +1,6 @@
 # Uncertaintext: uncertain text for uncertain numbers
 
-Uncertaintext provides dynamic styling for representing values and thier
-uncertainties in HTML.
+Uncertaintext provides dynamic styling for measurements with error bars in HTML text.
 
 The core idea is to express probabalistic values as series of random samples
 from some underlying distribution, rather than the usual summary statistics.
