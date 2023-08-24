@@ -64,10 +64,13 @@ This project uses:
 * [yarn](https://yarnpkg.com/) to manage dependencies and define a few helper commands
 * [webpack](https://webpack.js.org/) to bundle up the package and its dependencies as a single native module 
 * [jest](https://jestjs.io/) to handle testing
+* [eslint](https://eslint.org/) to check the code for problems
 
 To install dependencies: `yarn install`
 
 To run tests: `yarn test`
+
+To run the linter on all source files: `yarn lint`
 
 To build the package: `yarn build` or `yarn build-dev` to make a human readable version.
 
