@@ -60,9 +60,9 @@ two decimal places of precision, and update once a second:
 ## Developer Notes
 
 This project uses:
-* `yarn` to manage dependencies and define a few helper commands
-* `webpack` to bundle up the package and its dependencies as a single native module 
-* `jest` to handle testing
+* [yarn](https://yarnpkg.com/) to manage dependencies and define a few helper commands
+* [webpack](https://webpack.js.org/) to bundle up the package and its dependencies as a single native module 
+* [jest](https://jestjs.io/) to handle testing
 
 To install dependencies: `yarn install`
 
