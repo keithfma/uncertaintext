@@ -40,14 +40,14 @@ Each uncertain value should be a `<span>` element with the following attributes:
 
 | attribute | description |
 | ----------| ------------|
-| `class=uncertaintext` | Required, marks the span element for uncertaintext to find and update |
-| `data-uct-distrib=[string]` | Required, name of the distribution to sample from, currently supported names are: uniform, normal |
-| `data-uct-format=[string]` | Printf-style format string to apply to the sample, see [d3-format](https//github.com/d3/d3-format) for help |
-| `data-uct-fps=[int`]: Optional, update frequency in "frames" per second |
-| `data-uct-min=[float]` | Uniform distribution only, minimum value |
-| `data-uct-max=[float]` | Uniform distribution only, maximum value |
-| `data-uct-mu=[float]` | Normal distribution only, mean |
-| `data-uct-sigma=[float]` | Normal distribution only, standard deviation |
+| `class=uncertaintext` | Required. Marks the span element for uncertaintext to find and update. |
+| `data-uct-distrib=[string]` | Required, name of the distribution to sample from. Currently supported names are: uniform, normal. |
+| `data-uct-format=[string]` | Optional. Printf-style format string to apply to the sample. Default is `" .2f"`. See [d3-format](https//github.com/d3/d3-format) for help |
+| `data-uct-fps=[int]` |  Optional. Update frequency in "frames" per second. Default is `5`. |
+| `data-uct-min=[float]` | Uniform distribution only. Minimum value. |
+| `data-uct-max=[float]` | Uniform distribution only. Maximum value. |
+| `data-uct-mu=[float]` | Normal distribution only. Mean. |
+| `data-uct-sigma=[float]` | Normal distribution only. Standard deviation. |
 
 For example, to display an uncertain value with a standard normal distribution,
 two decimal places of precision, and update once a second:
