@@ -24,6 +24,11 @@ jobs:
       run: yarn test
     - name: Lint check source code
       run: yarn lint
-
-
+    - name: Confirm build is up-to-date
+      run: |
+        build_sum=$(sha1sum dist/uncertaintext.js | awk '{ print $1 }')
+        yarn build  # updates dist/uncertaintext.js
+        rebuild_sum=$(sha1sum dist/uncertaintext.js | awk '{ print $1 }')
+        echo ${build_sum}
+        echo ${rebuild_sum}
 
