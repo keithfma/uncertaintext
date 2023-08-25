@@ -29,6 +29,9 @@ jobs:
         build_sum=$(sha1sum dist/uncertaintext.js | awk '{ print $1 }')
         yarn build  # updates dist/uncertaintext.js
         rebuild_sum=$(sha1sum dist/uncertaintext.js | awk '{ print $1 }')
-        echo ${build_sum}
-        echo ${rebuild_sum}
-
+        if [ "$rebuild_sum" = "$build_sum" ]; then
+          echo "Build is up to date, cool."
+        else
+          echo "Build is NOT up to date, fail!"
+          exit 1
+        fi
