@@ -9,6 +9,7 @@
     "test": "node --input-type=module --experimental-vm-modules node_modules/jest/bin/jest.js",
     "build": "webpack --mode=production",
     "build-dev": "webpack --mode=development --devtool=cheap-module-source-map",
+    "clean": "rm dist/*",
     "lint": "yarn run eslint src/*.js" 
   },
   "repository": {
