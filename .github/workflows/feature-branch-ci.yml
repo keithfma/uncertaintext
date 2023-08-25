@@ -35,3 +35,14 @@ jobs:
           echo "Build is NOT up to date, fail!"
           exit 1
         fi
+    - name: Confirm example page is up-to-date
+      run: |
+        build_sum=$(sha1sum dist/uncertaintext.js | awk '{ print $1 }')
+        example_sum=$(sha1sum docs/uncertaintext.js | awk '{ print $1 }')
+        if [ "$example_sum" = "$build_sum" ]; then
+          echo "Example is up to date, cool."
+        else
+          echo "Example is NOT up to date, fail!"
+          exit 1
+        fi
+        
