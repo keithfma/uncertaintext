@@ -85,8 +85,3 @@ example page at `http://localhost:4000`:
 ```shell
 yarn run http-server docs -a localhost -p 4000
 ```
-
-Note that the example page uses a copy of `uncertaintext.js` in the `docs` folder.
-If you update uncertaintext, you will need to rebuild the module and copy it to 
-that folder to see the changes in the example.
-
