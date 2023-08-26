@@ -232,7 +232,7 @@ describe('uncertaintext', () => {
 
   test('happy path', () => {
   
-      // uniform distribution with min == max, so we know it's expected value
+      // uniform distribution with min == max, so we know its expected value
       let uniform_element = get_div('class=uncertaintext', 'data-uct-distrib=uniform', 'data-uct-min=2', 'data-uct-max=2', 'data-uct-format=.1f', 'data-uct-fps=1');
   
       // normal distribution with arbitrary mu and sigma
@@ -260,7 +260,7 @@ describe('uncertaintext', () => {
       // *broken* distribution we expect to be marked and ignored
       let broken_element =  get_div('class=uncertaintext', 'data-uct-distrib=invalid');
   
-      // two uniform distributions with min == max, so we know it's expected value
+      // two uniform distributions with min == max, so we know thier expected value
       let uniform_element_1 = get_div('class=uncertaintext', 'data-uct-distrib=uniform', 'data-uct-min=1', 'data-uct-max=1', 'data-uct-format=.1f', 'data-uct-fps=1');
       let uniform_element_2 = get_div('class=uncertaintext', 'data-uct-distrib=uniform', 'data-uct-min=2', 'data-uct-max=2', 'data-uct-format=.1f', 'data-uct-fps=2');
   
