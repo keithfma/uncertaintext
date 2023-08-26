@@ -18,11 +18,23 @@
   <p>
     Uncertaintext is designed to be simple to use, but with enough flexibility
     to show your uncertain numbers just the way you want them. 
-
-    For example, here is an uncertain number with a normal distribution with 
-    a mean of 10 and standard deviation of 2, updated twice a second, and 
-    displayed as an integer:
   </p>
+
+  <p>
+    For example, consider a normally-disctributed uncertain number with  mean 10 and standard
+    deviation 2. The usual way to represent this number (with boring static text) would be as a mean
+    and 2-&sigma; range: 
+  </p>
+
+  <p style="text-align:center">
+    10 &plusmn; 4
+  </p>
+ 
+  <p>
+    Uncertaintext can display this same uncertain number dynamically. Here, we sample the
+    distribution twice a second and round to an integer:
+  </p>
+  
     
   <p style="text-align:center">
     <span class=uncertaintext data-uct-distrib=normal data-uct-mu=10 data-uct-sigma=2 data-uct-format=".0f" data-uct-fps=2></span>
