@@ -15,8 +15,8 @@ it in action.
 
 ## Usage
 
-Include the [uncertaintext module](https://github.com/keithfma/uncertaintext/blob/main/dist/uncertaintext.js)
-distribution in your webpage and run the main function: 
+Include the "packed" [uncertaintext module](https://github.com/keithfma/uncertaintext/blob/main/dist/uncertaintext.js)
+in your webpage and run the main function: 
 
 ```html
 <!DOCTYPE html>
