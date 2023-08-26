@@ -76,12 +76,5 @@ To build the package: `yarn build` or `yarn build-dev` to make a human readable 
 
 To clean up (remove) the existing build: `yarn clean`
 
-To view the example page located at `docs/index.html`, you will need to host in
-with a local webserver.  The node package
-[http-server](https://www.npmjs.com/package/http-server) (installed along with
-other dependencies) does the job nicely. The following command will host the
-example page at `http://localhost:4000`:
+To host the example page at `http://localhost:4000`: `yarn example`
 
-```shell
-yarn run http-server docs -a localhost -p 4000
-```
