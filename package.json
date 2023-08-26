@@ -10,7 +10,8 @@
     "build": "webpack --mode=production",
     "build-dev": "webpack --mode=development --devtool=cheap-module-source-map",
     "clean": "rm dist/*",
-    "lint": "yarn run eslint src/*.js" 
+    "lint": "yarn run eslint src/*.js" ,
+    "example": "yarn run http-server docs -a localhost -p 4000"
   },
   "repository": {
     "type": "git",

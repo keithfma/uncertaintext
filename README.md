@@ -15,8 +15,8 @@ it in action.
 
 ## Usage
 
-Include the uncertaintext module [:warning:TODO: make "uncertaintext module" a link to
-the distribution :warning:] in your webpage and run the main function: 
+Include the "packed" [uncertaintext module](https://github.com/keithfma/uncertaintext/blob/main/dist/uncertaintext.js)
+in your webpage and run the main function: 
 
 ```html
 <!DOCTYPE html>
@@ -76,17 +76,5 @@ To build the package: `yarn build` or `yarn build-dev` to make a human readable 
 
 To clean up (remove) the existing build: `yarn clean`
 
-To view the example page located at `docs/index.html`, you will need to host in
-with a local webserver.  The node package
-[http-server](https://www.npmjs.com/package/http-server) (installed along with
-other dependencies) does the job nicely. The following command will host the
-example page at `http://localhost:4000`:
-
-```shell
-yarn run http-server docs -a localhost -p 4000
-```
-
-Note that the example page uses a copy of `uncertaintext.js` in the `docs` folder.
-If you update uncertaintext, you will need to rebuild the module and copy it to 
-that folder to see the changes in the example.
+To host the example page at localhost:4000: `yarn example`
 
