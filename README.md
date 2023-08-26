@@ -76,5 +76,5 @@ To build the package: `yarn build` or `yarn build-dev` to make a human readable 
 
 To clean up (remove) the existing build: `yarn clean`
 
-To host the example page at `http://localhost:4000`: `yarn example`
+To host the example page at localhost:4000: `yarn example`
 
